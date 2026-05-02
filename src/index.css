@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Work Sans", ui-sans-serif, system-ui, sans-serif;
+  
+  --color-brand-yellow: #FBB91A;
+  --color-brand-black: #000000;
+  --color-surface-card: rgba(83, 82, 82, 0.25);
+  --color-border-grey: #535252;
+  --color-chalk: #ECF1F2;
+  
+  --radius-brand: 8px;
+}
+
+@layer base {
+  body {
+    @apply text-brand-black font-sans antialiased min-h-screen transition-colors duration-500;
+    background: linear-gradient(to top, rgba(251, 185, 26, 0.2) 0%, #ffffff 100%);
+    background-attachment: fixed;
+  }
+
+  .dark body {
+    @apply text-chalk bg-zinc-950 transition-colors duration-500;
+    background: linear-gradient(to bottom, #1a1a1a 0%, #121212 100%);
+    background-attachment: fixed;
+  }
+
+  .dark header, .dark aside, .dark nav {
+    background-color: #121212 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-white/40 backdrop-blur-2xl border border-black/10 shadow-2xl transition-all duration-500;
+  }
+
+  .dark .glass-card {
+    background-color: rgba(30, 30, 30, 0.8);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  }
+
+  .dark input, .dark select, .dark textarea {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    color: var(--color-chalk) !important;
+    @apply placeholder:text-chalk/30;
+  }
+
+  .dark .text-brand-black {
+    color: var(--color-chalk) !important;
+  }
+
+  .dark .text-brand-black\/60,
+  .dark .text-brand-black\/40 {
+    color: rgba(236, 241, 242, 0.5) !important;
+  }
+
+  .dark .bg-white {
+    background-color: #1a1a1a !important;
+  }
+
+  .dark .bg-black\/5 {
+    background-color: rgba(255, 255, 255, 0.07) !important;
+  }
+  
+  .industrial-shadow {
+    box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.1), -10px -10px 40px rgba(255, 255, 255, 0.05);
+  }
+  
+  .zebra-stripe-row:nth-child(even) {
+    @apply bg-white/5;
+  }
+  
+  .zebra-stripe-row:nth-child(odd) {
+    @apply bg-transparent;
+  }
+}
