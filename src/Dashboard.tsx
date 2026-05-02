@@ -116,14 +116,17 @@ export default function Dashboard({ onLogout }: DashboardProps) {
     }).format(date);
   };
 
-  const getMonthHistory = (): HistoryEntry[] => {
+  const monthHistory = React.useMemo((): HistoryEntry[] => {
     const today = new Date();
     const history: HistoryEntry[] = [];
     const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
     
+    // Create a stable seed based on date to make random-looking but stable data
     for (let d = new Date(today); d >= firstDay; d.setDate(d.getDate() - 1)) {
       const isWeekend = d.getDay() === 0 || d.getDay() === 6;
-      if (!isWeekend || Math.random() > 0.5) {
+      // Use a deterministic condition instead of direct Math.random() inside render
+      const dayHash = d.getDate() + d.getMonth();
+      if (!isWeekend || dayHash % 2 === 0) {
         history.push({
           date: d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
           timeframe: '08:00 - 17:00',
@@ -133,9 +136,8 @@ export default function Dashboard({ onLogout }: DashboardProps) {
       }
     }
     return history;
-  };
+  }, []);
 
-  const monthHistory = getMonthHistory();
   const displayHistory = currentSubView === 'DASHBOARD' ? monthHistory.slice(0, 4) : monthHistory;
 
   const weeklySchedule = [
